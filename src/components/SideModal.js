@@ -1,59 +1,48 @@
 import React from "react";
+import { useModalOverlayContext } from "../context/ModalOverlayContext";
+import { HiOutlineX } from "react-icons/hi";
 
-const SideModal = () => {
+const SideModal = ({ children }) => {
+  const { setModalOverlay } = useModalOverlayContext();
+
+  const closeModal = (event) => {
+    event.preventDefault();
+    setModalOverlay(false);
+  };
+
+  const addAction = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div className="inset-0 fixed bg-gray-900 bg-opacity-40 z-10">
-      <div className="h-full w-8/12 bg-white float-right pl-10 pt-5 flex-col">
-        <h1>Add an action</h1>
-        <div>
-          <h1>Email</h1>
-          <form className="">
-            <label>To</label>
-            <input type="email" placeholder="Enter the receiver's mail"></input>
-            <label>From</label>
-            <input type="email" placeholder="Enter the sendee's mail"></input>
-            <label>Subject</label>
-            <input type="text" placeholder="Enter the subject"></input>
-            <label>Body</label>
-            <textarea placeholder="Enter the body here"></textarea>
-          </form>
+      <div className="h-full w-5/12 bg-white float-right px-10 pt-1 flex-col font-serif">
+        <div className="flex items-center justify-between">
+          <text className="text-2xl">Add an Action</text>
+          <HiOutlineX
+            className="text-4xl hover:bg-gray-200 rounded-full p-1"
+            onClick={closeModal}
+          />
         </div>
-        <div>
-          <h1>Meeting</h1>
-          <form>
-            <input
-              type="email"
-              placeholder="Enter email to add for a meeting"
-            ></input>
-            <button>Add</button>
-          </form>
-        </div>
-        <div>
-          <h1>Location</h1>
-          <form>
-            <label>Location</label>
-            <input type="url" placeholder="Add a location"></input>
-          </form>
-        </div>
-        <div>
-          <h1>Reminder</h1>
-          <form>
-            <input
-              type="email"
-              placeholder="Enter email to add for a reminder"
-            ></input>
-            <button>Add</button>
-          </form>
-          <h1>Reminder Note</h1>
-          <textarea placeholder="Enter reminder note"></textarea>
-        </div>
-        <div>
-          <button>CANCEL</button>
-          <button>SUBMIT</button>
-        </div>
+        {children ? children : null}
       </div>
     </div>
   );
 };
 
 export default SideModal;
+
+/*          <div className="">
+            <button
+              onClick={closeModal}
+              className="w-24 h-10 rounded-lg bg-red-600 text-white float-right font-bold"
+            >
+              CANCEL
+            </button>
+            <button
+              onClick={addAction}
+              className="w-24 h-10 rounded-lg bg-green-600 text-white float-right mx-4 font-bold"
+            >
+              SUBMIT
+            </button>
+          </div> */
