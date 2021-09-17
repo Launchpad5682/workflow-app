@@ -78,6 +78,27 @@ export const WorkflowProvider = (props) => {
         // console.log(ele);
         tempElements.push(ele);
       } else if (label === "Schedule Meeting") {
+        const id = action.id;
+        const ele = {
+          id: id,
+          type: "default",
+          data: {
+            label: (
+              <div>
+                {action.label}
+                <div>
+                  {action.emailList
+                    ? action.emailList.map((email) => <span>{email}</span>)
+                    : null}
+                  Deadline: {action.deadline}
+                  <br />
+                </div>
+              </div>
+            ),
+          },
+          position: { x: x, y: y },
+        };
+        tempElements.push(ele);
       } else {
       }
     });
