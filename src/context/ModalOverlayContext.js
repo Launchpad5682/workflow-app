@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState } from "react";
 
 export const ModalOverlayContext = createContext();
@@ -6,11 +5,17 @@ export const ModalOverlayContext = createContext();
 export const useModalOverlayContext = () => useContext(ModalOverlayContext);
 
 export const ModalOverlayProvider = (props) => {
-  const [modalOverlay, setModalOverlay] = useState(false);
+  const [sendEmailOverlay, setSendEmailOverlay] = useState(false);
+  const [scheduleMeetingOverlay, setScheduleMeetingOverlay] = useState(false);
+  const [reminderOverlay, setReminderOverlay] = useState(false);
 
   const value = {
-    modalOverlay,
-    setModalOverlay,
+    sendEmailOverlay,
+    setSendEmailOverlay,
+    scheduleMeetingOverlay,
+    setScheduleMeetingOverlay,
+    reminderOverlay,
+    setReminderOverlay,
   };
 
   return (
