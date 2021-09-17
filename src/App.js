@@ -28,7 +28,12 @@ function App() {
 
   const onConnect = (params) => setElements((els) => addEdge(params, els));
   const onElementClick = (event, element) => {
-    console.log("click", element);
+    console.log("click", element.data.label);
+    const action = element.data.label;
+    if (action === "Send Mail") setSendEmailOverlay(true);
+    else if (action === "Schedule Meeting") setScheduleMeetingOverlay(true);
+    else setReminderOverlay(true);
+    // set id of the element to get the information to update
     //setModalOverlay(true);
   };
 
