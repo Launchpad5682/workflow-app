@@ -34,30 +34,54 @@ export const WorkflowProvider = (props) => {
 
   const [elements, setElements] = useState(initialState);
   const [actions, setActions] = useState([
-    { id: "4f82", label: "Send Mail" },
-    { id: "4f83", label: "Send Mail" },
+    // { id: "4f82", label: "Send Mail", data: <div>Hello</div> },
+    // { id: "4f83", label: "Send Mail" },
+    {
+      id: "5hd4",
+      label: "Send Mail",
+      toEmail: "text@gmail.com",
+      fromEmail: "launchpad5682@gmail.com",
+      subject: "meeting at 2:50PM",
+      body: "Hi Sam, can we have a meeting at 2:50 PM about product feature.",
+      deadline: "",
+    },
   ]);
 
   useEffect(() => {
     let tempElements = [];
+    console.log(actions);
     actions.forEach((action) => {
       const x = Math.floor(Math.random() * 400);
       const y = Math.floor(Math.random() * 400);
       const label = action.label;
+      console.log(label);
       if (label === "Send Mail") {
         const id = action.id;
         const ele = {
           id: id,
           type: "default",
-          data: { label: action.label },
+          data: {
+            label: (
+              <div>
+                {action.label}
+                <div>
+                  To: {action.toEmail} <br />
+                  From: {action.fromEmail} <br />
+                  Subject: {action.subject} <br />
+                  Deadline: {action.deadline} <br />
+                </div>
+              </div>
+            ),
+          },
           position: { x: x, y: y },
         };
+        // console.log(ele);
         tempElements.push(ele);
       } else if (label === "Schedule Meeting") {
       } else {
       }
     });
-
+    console.log(tempElements);
     setElements(tempElements);
   }, [actions]);
 
