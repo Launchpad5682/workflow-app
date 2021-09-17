@@ -1,7 +1,17 @@
 import React from "react";
 import { HiClock } from "react-icons/hi";
+import { useModalOverlayContext } from "../../context/ModalOverlayContext";
 
 const SetReminder = () => {
+  const { setReminderOverlay } = useModalOverlayContext();
+
+  const closeModal = (event) => {
+    event.preventDefault();
+    setReminderOverlay(false);
+  };
+
+  const addSetReminderAction = () => {};
+
   return (
     <div>
       <h1>Reminder</h1>
@@ -23,6 +33,24 @@ const SetReminder = () => {
         placeholder="Enter reminder note"
         className="w-full outline-none border-2 resize-none h-24 px-2 py-1"
       ></textarea>
+      <div>
+        <label className="block">Deadline</label>
+        <input type="datetime-local" />
+      </div>
+      <div className="mt-9">
+        <button
+          onClick={addSetReminderAction}
+          className="w-24 h-10 rounded-lg bg-green-600 text-white font-bold"
+        >
+          SUBMIT
+        </button>
+        <button
+          onClick={closeModal}
+          className="w-24 h-10 rounded-lg bg-red-600 text-white font-bold ml-5"
+        >
+          CANCEL
+        </button>
+      </div>
     </div>
   );
 };

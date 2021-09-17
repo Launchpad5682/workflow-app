@@ -1,7 +1,17 @@
 import React from "react";
 import { HiLocationMarker, HiMail } from "react-icons/hi";
+import { useModalOverlayContext } from "../../context/ModalOverlayContext";
 
 const ScheduleMeeting = () => {
+  const { setScheduleMeetingOverlay } = useModalOverlayContext();
+
+  const closeModal = (event) => {
+    event.preventDefault();
+    setScheduleMeetingOverlay(false);
+  };
+
+  const addMeetingAction = () => {};
+
   return (
     <div>
       <div>
@@ -33,6 +43,24 @@ const ScheduleMeeting = () => {
             Add
           </button>
         </div>
+      </div>
+      <div>
+        <label className="block">Deadline</label>
+        <input type="datetime-local" />
+      </div>
+      <div className="mt-9">
+        <button
+          onClick={addMeetingAction}
+          className="w-24 h-10 rounded-lg bg-green-600 text-white font-bold"
+        >
+          SUBMIT
+        </button>
+        <button
+          onClick={closeModal}
+          className="w-24 h-10 rounded-lg bg-red-600 text-white font-bold ml-5"
+        >
+          CANCEL
+        </button>
       </div>
     </div>
   );

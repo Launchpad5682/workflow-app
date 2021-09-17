@@ -1,9 +1,19 @@
 import React from "react";
 import { HiAtSymbol, HiDocumentText, HiOutlineBookOpen } from "react-icons/hi";
+import { useModalOverlayContext } from "../../context/ModalOverlayContext";
 
 const SendEmail = () => {
+  const { setSendEmailOverlay } = useModalOverlayContext();
+
+  const closeModal = (event) => {
+    event.preventDefault();
+    setSendEmailOverlay(false);
+  };
+
+  const addSendEmailAction = () => {};
+
   return (
-    <div>
+    <form>
       <text className="text-xl">Email</text>
       <label className="block">To</label>
       <div className="border-2 w-full flex items-center px-2">
@@ -39,7 +49,26 @@ const SendEmail = () => {
           className="w-full outline-none resize-none px-2"
         />
       </div>
-    </div>
+      <div>
+        <label className="block">Deadline</label>
+        <input type="datetime-local" />
+      </div>
+      <div className="h-full"></div>
+      <div className="mt-9">
+        <button
+          onClick={addSendEmailAction}
+          className="w-24 h-10 rounded-lg bg-green-600 text-white font-bold"
+        >
+          SUBMIT
+        </button>
+        <button
+          onClick={closeModal}
+          className="w-24 h-10 rounded-lg bg-red-600 text-white font-bold ml-5"
+        >
+          CANCEL
+        </button>
+      </div>
+    </form>
   );
 };
 
