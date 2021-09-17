@@ -6,7 +6,7 @@ const ScheduleMeeting = () => {
     <div>
       <div>
         <h1>Meeting</h1>
-        <div className="h-24 w-8/12">
+        <div className="h-24 w-full">
           <div className="flex h-8 items-center border-2 pl-2 rounded-md">
             <HiMail className="inline text-lg" />
             <input
@@ -20,7 +20,7 @@ const ScheduleMeeting = () => {
           </div>
         </div>
       </div>
-      <div className="w-8/12">
+      <div className="w-full">
         <label className="block">Location</label>
         <div className="flex h-8 items-center border-2 pl-2 rounded-md my-2">
           <HiLocationMarker className="inline text-lg" />

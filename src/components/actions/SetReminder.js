@@ -5,7 +5,7 @@ const SetReminder = () => {
   return (
     <div>
       <h1>Reminder</h1>
-      <div className="h-24 w-8/12">
+      <div className="h-24 w-full">
         <div className="flex h-8 items-center border-2 pl-2 rounded-md">
           <HiClock className="inline" />
           <input
@@ -18,11 +18,10 @@ const SetReminder = () => {
           </button>
         </div>
       </div>
-
       <h1>Reminder Note</h1>
       <textarea
         placeholder="Enter reminder note"
-        className="w-8/12 outline-none border-2 resize-none h-24 px-2 py-1"
+        className="w-full outline-none border-2 resize-none h-24 px-2 py-1"
       ></textarea>
     </div>
   );

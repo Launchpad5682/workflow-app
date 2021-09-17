@@ -6,7 +6,7 @@ const SendEmail = () => {
     <div>
       <text className="text-xl">Email</text>
       <label className="block">To</label>
-      <div className="border-2 w-8/12 flex items-center px-2">
+      <div className="border-2 w-full flex items-center px-2">
         <HiAtSymbol className="inline text-lg" />
         <input
           type="email"
@@ -15,7 +15,7 @@ const SendEmail = () => {
         />
       </div>
       <label className="block">From</label>
-      <div className="border-2 w-8/12 flex items-center px-2">
+      <div className="border-2 w-full flex items-center px-2">
         <HiAtSymbol className="inline text-lg" />
         <input
           type="email"
@@ -24,7 +24,7 @@ const SendEmail = () => {
         />
       </div>
       <label className="block">Subject</label>
-      <div className="border-2 w-8/12 flex h-28 px-2 pt-2">
+      <div className="border-2 w-full flex h-28 px-2 pt-2">
         <HiDocumentText className="inline text-lg" />
         <textarea
           placeholder="Enter the subject"
@@ -32,7 +32,7 @@ const SendEmail = () => {
         />
       </div>
       <label className="block">Body</label>
-      <div className="border-2 w-8/12 flex h-28 px-2 pt-2">
+      <div className="border-2 w-full flex h-64 px-2 pt-2">
         <HiOutlineBookOpen className="inline text-lg" />
         <textarea
           placeholder="Enter the body here"
