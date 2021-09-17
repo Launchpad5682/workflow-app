@@ -5,7 +5,7 @@ export const WorkflowContext = createContext();
 export const useWorkflowContext = () => useContext(WorkflowContext);
 
 export const WorkflowProvider = (props) => {
-  const [elements, setElements] = useState([
+  const initialState = [
     {
       id: "1",
       type: "input", // input node
@@ -25,8 +25,9 @@ export const WorkflowProvider = (props) => {
       position: { x: 250, y: 250 },
     },
     { id: "e1-2", source: "1", target: "2", animated: true },
-    { id: "e2-3", source: "2", target: "3" },
-  ]);
+  ];
+
+  const [elements, setElements] = useState(initialState);
 
   const value = { elements, setElements };
   return (
