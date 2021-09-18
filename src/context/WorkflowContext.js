@@ -36,11 +36,11 @@ export const WorkflowProvider = (props) => {
     {
       id: "5hd4",
       label: "Send Mail",
-      toEmail: "text@gmail.com",
-      fromEmail: "launchpad5682@gmail.com",
+      toEmail: "test@gmail.com",
+      fromEmail: "test2@gmail.com",
       subject: "meeting at 2:50PM",
       body: "Hi Sam, can we have a meeting at 2:50 PM about product feature.",
-      deadline: "",
+      deadline: "2021-09-18T14:09",
     },
     {
       id: "bc26",
@@ -48,6 +48,13 @@ export const WorkflowProvider = (props) => {
       emailList: ["launchpad5682@gmail.com"],
       reminder:
         "We need to arrange 3 meetings in this week regarding product features.",
+      deadline: "2021-09-18T14:09",
+    },
+    {
+      id: "bc82",
+      label: "Schedule Meeting",
+      emailList: ["test@gmail.com", "test2@gmail.com", "test3@gmail.com"],
+      location: "https://g.page/Paras-JK-Hospital?share",
       deadline: "2021-09-18T14:09",
     },
   ];
@@ -73,13 +80,17 @@ export const WorkflowProvider = (props) => {
           type: "default",
           data: {
             label: (
-              <div>
-                {action.label}
+              <div className="text-left">
+                <h1 className="text-2xl">{action.label}</h1>
                 <div>
-                  To: {action.toEmail} <br />
-                  From: {action.fromEmail} <br />
-                  Subject: {action.subject} <br />
-                  Deadline: {action.deadline} <br />
+                  <span className="font-bold">To: </span> {action.toEmail}{" "}
+                  <br />
+                  <span className="font-bold">From: </span> {action.fromEmail}{" "}
+                  <br />
+                  <span className="font-bold">Subject: </span>
+                  {action.subject} <br />
+                  <span className="font-bold">Deadline: </span>{" "}
+                  {action.deadline} <br />
                 </div>
               </div>
             ),
@@ -96,13 +107,23 @@ export const WorkflowProvider = (props) => {
           type: "default",
           data: {
             label: (
-              <div>
-                {action.label}
+              <div className="text-left">
+                <h1 className="text-2xl">{action.label}</h1>
                 <div>
+                  <span className="font-bold block">Participants</span>
                   {action.emailList
-                    ? action.emailList.map((email) => <span>{email}</span>)
+                    ? action.emailList.map((email) => (
+                        <span className="block mt-2 rounded-2xl pl-2 py-1 bg-green-300">
+                          {email}
+                        </span>
+                      ))
                     : null}
-                  Deadline: {action.deadline}
+                  <br />
+                  <span className="font-bold block">Location: </span>
+                  {action.location}
+                  <br />
+                  <span className="font-bold">Deadline: </span>
+                  {action.deadline}
                   <br />
                 </div>
               </div>
@@ -119,15 +140,23 @@ export const WorkflowProvider = (props) => {
           type: "default",
           data: {
             label: (
-              <div>
-                {action.label}
+              <div className="text-left">
+                <h1 className="text-2xl">{action.label}</h1>
                 <div>
+                  <span className="font-bold block">Participants</span>
                   {action.emailList
-                    ? action.emailList.map((email) => <span>{email}</span>)
+                    ? action.emailList.map((email) => (
+                        <span className="block mt-2 rounded-2xl pl-2 py-1 bg-yellow-300">
+                          {email}
+                        </span>
+                      ))
                     : null}
-                  Reminder: {action.reminder}
                   <br />
-                  Deadline: {action.deadline}
+                  <span className="font-bold">Reminder: </span>
+                  {action.reminder}
+                  <br />
+                  <span className="font-bold">Deadline: </span>
+                  {action.deadline}
                   <br />
                 </div>
               </div>
