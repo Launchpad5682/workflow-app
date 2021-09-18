@@ -19,7 +19,7 @@ function App() {
     setReminderOverlay,
   } = useModalOverlayContext();
 
-  const { actions, editMode, setEditMode } = useWorkflowContext();
+  const { actions, setEditMode } = useWorkflowContext();
 
   const modalSlideInput = (event) => {
     const action = event.target.id;
