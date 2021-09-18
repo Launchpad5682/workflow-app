@@ -1,16 +1,20 @@
 import React from "react";
 import { useModalOverlayContext } from "../context/ModalOverlayContext";
 import { HiOutlineX } from "react-icons/hi";
+import { useWorkflowContext } from "../context/WorkflowContext";
 
 const SideModal = ({ children, action }) => {
   const { setSendEmailOverlay, setScheduleMeetingOverlay, setReminderOverlay } =
     useModalOverlayContext();
+  const { editMode, setEditMode } = useWorkflowContext();
 
   const closeModal = (event) => {
     event.preventDefault();
     if (action === "sendEmail") setSendEmailOverlay(false);
     else if (action === "scheduleMeeting") setScheduleMeetingOverlay(false);
     else setReminderOverlay(false);
+
+    if (editMode) setEditMode(null);
   };
 
   return (
