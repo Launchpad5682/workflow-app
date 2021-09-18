@@ -100,6 +100,29 @@ export const WorkflowProvider = (props) => {
         };
         tempElements.push(ele);
       } else {
+        const id = action.id;
+        const ele = {
+          id: id,
+          type: "default",
+          data: {
+            label: (
+              <div>
+                {action.label}
+                <div>
+                  {action.emailList
+                    ? action.emailList.map((email) => <span>{email}</span>)
+                    : null}
+                  Reminder: {action.reminder}
+                  <br />
+                  Deadline: {action.deadline}
+                  <br />
+                </div>
+              </div>
+            ),
+          },
+          position: { x: x, y: y },
+        };
+        tempElements.push(ele);
       }
     });
     console.log(tempElements);
