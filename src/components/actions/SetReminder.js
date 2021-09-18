@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { HiClock } from "react-icons/hi";
 import { useModalOverlayContext } from "../../context/ModalOverlayContext";
 import { useWorkflowContext } from "../../context/WorkflowContext";
@@ -6,7 +6,7 @@ import { idGenerator } from "../../helper/idGenerator";
 
 const SetReminder = () => {
   const { setReminderOverlay } = useModalOverlayContext();
-  const { actions, setActions } = useWorkflowContext();
+  const { actions, setActions, editMode, setEditMode } = useWorkflowContext();
   const [emails, setEmails] = useState([]);
   const emailRef = useRef(null);
   const noteRef = useRef(null);
@@ -15,11 +15,12 @@ const SetReminder = () => {
   const closeModal = (event) => {
     event.preventDefault();
     setReminderOverlay(false);
+    if (editMode) setEditMode(null);
   };
 
   const addSetReminderAction = (event) => {
     event.preventDefault();
-    const id = idGenerator();
+    const id = editMode ? editMode.id : idGenerator();
     const emailList = emails;
     const reminder = noteRef.current.value;
     const deadline = deadlineRef.current.value;
@@ -33,9 +34,19 @@ const SetReminder = () => {
       reminder: reminder,
       deadline: deadline,
     };
-
-    setActions([...actions, action]);
-    setReminderOverlay(false);
+    if (editMode === null) {
+      setActions([...actions, action]);
+      setReminderOverlay(false);
+    } else {
+      const actionIndex = actions.findIndex(
+        (action) => action.id === editMode.id
+      );
+      const tempActions = actions;
+      tempActions[actionIndex] = action;
+      setActions([...tempActions]);
+      setEditMode(null);
+      setReminderOverlay(false);
+    }
   };
 
   const addMail = (event) => {
@@ -43,6 +54,15 @@ const SetReminder = () => {
     setEmails([...emails, emailRef.current.value]);
     emailRef.current.value = null;
   };
+
+  useEffect(() => {
+    if (editMode) {
+      const action = actions.filter((action) => action.id === editMode.id)[0];
+      noteRef.current.value = action.reminder;
+      deadlineRef.current.value = action.deadline;
+      setEmails(action.emailList);
+    }
+  }, [editMode, actions]);
 
   return (
     <form onSubmit={addSetReminderAction}>
@@ -80,7 +100,7 @@ const SetReminder = () => {
           type="submit"
           className="w-24 h-10 rounded-lg bg-green-600 text-white font-bold"
         >
-          SUBMIT
+          {editMode ? "EDIT" : "SUBMIT"}
         </button>
         <button
           onClick={closeModal}
