@@ -11,6 +11,7 @@ const SendEmail = () => {
   const closeModal = (event) => {
     event.preventDefault();
     setSendEmailOverlay(false);
+    if (editMode) setEditMode(null);
   };
 
   const toEmailRef = useRef(null);
