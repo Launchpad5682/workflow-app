@@ -3,6 +3,7 @@ import { HiLocationMarker, HiMail } from "react-icons/hi";
 import { useModalOverlayContext } from "../../context/ModalOverlayContext";
 import { useWorkflowContext } from "../../context/WorkflowContext";
 import { idGenerator } from "../../helper/idGenerator";
+import EmailCard from "../EmailCard";
 
 const ScheduleMeeting = () => {
   const { setScheduleMeetingOverlay } = useModalOverlayContext();
@@ -11,6 +12,12 @@ const ScheduleMeeting = () => {
   const emailRef = useRef(null);
   const locationRef = useRef(null);
   const deadlineRef = useRef(null);
+
+  const removeEmail = (event, mail) => {
+    event.preventDefault();
+    const tempEmails = emails.filter((email) => email !== mail);
+    setEmails(tempEmails);
+  };
 
   const closeModal = (event) => {
     event.preventDefault();
@@ -70,7 +77,7 @@ const ScheduleMeeting = () => {
     <form onSubmit={addMeetingAction}>
       <div>
         <h1>Meeting</h1>
-        <div className="h-24 w-full">
+        <div className="h-48 w-full">
           <div className="flex h-8 items-center border-2 pl-2 rounded-md">
             <HiMail className="inline text-lg" />
             <input
@@ -86,7 +93,17 @@ const ScheduleMeeting = () => {
               Add
             </button>
           </div>
-          {emails ? emails.map((email) => <span>{email}</span>) : null}
+          <div className="mt-3">
+            {emails
+              ? emails.map((email) => (
+                  <EmailCard
+                    key={email}
+                    email={email}
+                    removeEmail={(event) => removeEmail(event, email)}
+                  />
+                ))
+              : null}
+          </div>
         </div>
       </div>
       <div className="w-full">
