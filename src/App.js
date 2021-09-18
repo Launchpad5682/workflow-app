@@ -84,7 +84,7 @@ function App() {
         </SideModal>
       ) : null}
       {/* The dimensions of your React Flow component depend on the parents dimensions. */}
-      <div className="h-5/6 w-full  bg-white border-red-900 border-solid border-2">
+      <div className="h-5/6 w-full  bg-blue-200 border-gray-800 rounded-lg border-solid border-2">
         <ReactFlow
           elements={elements}
           onConnect={onConnect}
