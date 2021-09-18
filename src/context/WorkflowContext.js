@@ -84,6 +84,7 @@ export const WorkflowProvider = (props) => {
               </div>
             ),
           },
+          style: { height: "auto", width: "auto", border: "2px solid red" },
           position: { x: x, y: y },
         };
         // console.log(ele);
@@ -107,6 +108,7 @@ export const WorkflowProvider = (props) => {
               </div>
             ),
           },
+          style: { height: "auto", width: "auto", border: "2px solid green" },
           position: { x: x, y: y },
         };
         tempElements.push(ele);
@@ -130,6 +132,11 @@ export const WorkflowProvider = (props) => {
                 </div>
               </div>
             ),
+          },
+          style: {
+            height: "auto",
+            width: "300px",
+            border: "2px solid yellow",
           },
           position: { x: x, y: y },
         };
