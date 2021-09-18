@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { HiLocationMarker, HiMail } from "react-icons/hi";
 import { useModalOverlayContext } from "../../context/ModalOverlayContext";
 import { useWorkflowContext } from "../../context/WorkflowContext";
@@ -6,7 +6,7 @@ import { idGenerator } from "../../helper/idGenerator";
 
 const ScheduleMeeting = () => {
   const { setScheduleMeetingOverlay } = useModalOverlayContext();
-  const { actions, setActions } = useWorkflowContext();
+  const { actions, setActions, editMode, setEditMode } = useWorkflowContext();
   const [emails, setEmails] = useState([]);
   const emailRef = useRef(null);
   const locationRef = useRef(null);
@@ -15,11 +15,12 @@ const ScheduleMeeting = () => {
   const closeModal = (event) => {
     event.preventDefault();
     setScheduleMeetingOverlay(false);
+    if (editMode) setEditMode(null);
   };
 
   const addMeetingAction = (event) => {
     event.preventDefault();
-    const id = idGenerator();
+    const id = editMode ? editMode.id : idGenerator();
     const emailList = emails;
     const location = locationRef.current.value;
     const deadline = deadlineRef.current.value;
@@ -33,9 +34,20 @@ const ScheduleMeeting = () => {
       location: location,
       deadline: deadline,
     };
-    
-    setActions([...actions, action]);
-    setScheduleMeetingOverlay(false);
+
+    if (editMode === null) {
+      setActions([...actions, action]);
+      setScheduleMeetingOverlay(false);
+    } else {
+      const actionIndex = actions.findIndex(
+        (action) => action.id === editMode.id
+      );
+      const tempActions = actions;
+      tempActions[actionIndex] = action;
+      setActions([...tempActions]);
+      setEditMode(null);
+      setScheduleMeetingOverlay(false);
+    }
   };
 
   const addMail = (event) => {
@@ -44,6 +56,15 @@ const ScheduleMeeting = () => {
     setEmails([...emails, emailRef.current.value]);
     emailRef.current.value = null;
   };
+
+  useEffect(() => {
+    if (editMode) {
+      const action = actions.filter((action) => action.id === editMode.id)[0];
+      locationRef.current.value = action.location;
+      deadlineRef.current.value = action.deadline;
+      setEmails(action.emailList);
+    }
+  }, [editMode, actions]);
 
   return (
     <form onSubmit={addMeetingAction}>
@@ -89,7 +110,7 @@ const ScheduleMeeting = () => {
           type="submit"
           className="w-24 h-10 rounded-lg bg-green-600 text-white font-bold"
         >
-          SUBMIT
+          {editMode ? "EDIT" : "SUBMIT"}
         </button>
         <button
           onClick={closeModal}
