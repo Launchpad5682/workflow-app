@@ -64,12 +64,14 @@ const SendEmail = () => {
 
   useEffect(() => {
     console.log("send email in edit mode", editMode);
-    const action = actions.filter((action) => action.id === editMode.id)[0];
-    toEmailRef.current.value = action.toEmail;
-    fromEmailRef.current.value = action.fromEmail;
-    subjectRef.current.value = action.subject;
-    bodyRef.current.value = action.body;
-    deadlineRef.current.value = action.deadline;
+    if (editMode) {
+      const action = actions.filter((action) => action.id === editMode.id)[0];
+      toEmailRef.current.value = action.toEmail;
+      fromEmailRef.current.value = action.fromEmail;
+      subjectRef.current.value = action.subject;
+      bodyRef.current.value = action.body;
+      deadlineRef.current.value = action.deadline;
+    }
   }, [editMode, actions]);
 
   return (
