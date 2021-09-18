@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { HiAtSymbol, HiDocumentText, HiOutlineBookOpen } from "react-icons/hi";
 import { useModalOverlayContext } from "../../context/ModalOverlayContext";
 import { useWorkflowContext } from "../../context/WorkflowContext";
@@ -6,7 +6,7 @@ import { idGenerator } from "../../helper/idGenerator";
 
 const SendEmail = () => {
   const { setSendEmailOverlay } = useModalOverlayContext();
-  const { actions, setActions } = useWorkflowContext();
+  const { actions, setActions, editMode, setEditMode } = useWorkflowContext();
 
   const closeModal = (event) => {
     event.preventDefault();
@@ -22,7 +22,7 @@ const SendEmail = () => {
   const addSendEmailAction = (event) => {
     event.preventDefault();
     //console.log(toEmailRef.current.value);
-    const id = idGenerator();
+    const id = editMode ? editMode.id : idGenerator();
     const toEmail = toEmailRef.current.value;
     const fromEmail = fromEmailRef.current.value;
     const subject = subjectRef.current.value;
@@ -44,10 +44,33 @@ const SendEmail = () => {
     subjectRef.current.value = null;
     bodyRef.current.value = null;
     deadlineRef.current.value = null;
-    setActions([...actions, action]);
-    setSendEmailOverlay(false);
+    if (editMode === null) {
+      setActions([...actions, action]);
+      setSendEmailOverlay(false);
+    } else {
+      // edit mode
+      const actionIndex = actions.findIndex(
+        (action) => action.id === editMode.id
+      );
+
+      const tempActions = actions;
+      tempActions[actionIndex] = action;
+      setActions([...tempActions]);
+      setEditMode(null);
+      setSendEmailOverlay(false);
+    }
     // console.log(action);
   };
+
+  useEffect(() => {
+    console.log("send email in edit mode", editMode);
+    const action = actions.filter((action) => action.id === editMode.id)[0];
+    toEmailRef.current.value = action.toEmail;
+    fromEmailRef.current.value = action.fromEmail;
+    subjectRef.current.value = action.subject;
+    bodyRef.current.value = action.body;
+    deadlineRef.current.value = action.deadline;
+  }, [editMode, actions]);
 
   return (
     <form onSubmit={addSendEmailAction}>
@@ -100,7 +123,7 @@ const SendEmail = () => {
           type="submit"
           className="w-24 h-10 rounded-lg bg-green-600 text-white font-bold"
         >
-          SUBMIT
+          {editMode ? "EDIT" : "SUBMIT"}
         </button>
         <button
           onClick={closeModal}
