@@ -19,6 +19,8 @@ function App() {
     setReminderOverlay,
   } = useModalOverlayContext();
 
+  const { actions, editMode, setEditMode } = useWorkflowContext();
+
   const modalSlideInput = (event) => {
     const action = event.target.id;
     if (action === "sendEmail") setSendEmailOverlay(true);
@@ -28,10 +30,13 @@ function App() {
 
   const onConnect = (params) => setElements((els) => addEdge(params, els));
   const onElementClick = (event, element) => {
-    console.log("click", element.data.label);
-    const action = element.data.label;
-    if (action === "Send Mail") setSendEmailOverlay(true);
-    else if (action === "Schedule Meeting") setScheduleMeetingOverlay(true);
+    console.log("click", element.id);
+    const action = actions.filter((action) => action.id === element.id)[0];
+    console.log(action);
+    setEditMode({ id: element.id });
+    if (action.label === "Send Mail") setSendEmailOverlay(true);
+    else if (action.label === "Schedule Meeting")
+      setScheduleMeetingOverlay(true);
     else setReminderOverlay(true);
     // set id of the element to get the information to update
     //setModalOverlay(true);
